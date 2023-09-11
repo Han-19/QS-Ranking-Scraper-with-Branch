@@ -11,15 +11,17 @@ class QS_SCAPER():
     def __init__(self):
         self.branch_list = ['art-design',
                             'business-management-studies', 
-                            'computer-science-information-systems', 
+                            'computer-science-information-systems',
+                            'economics-econometrics' 
                             'data-science',
                             'physics-astronomy', 
-                            'politics',]
+                            'politics',
+                            'social-sciences-management']
         self.df = pd.DataFrame(columns=['UNIVERSITY', 'RANK','Country','City/State', *self.branch_list])
         
         URL_main = "https://www.topuniversities.com/university-rankings/world-university-rankings/2024?&page="
         
-        self.all_uni, self.all_rank = self.get_uni(URL_main,pages=50)
+        self.all_uni, self.all_rank = self.get_uni(URL_main,pages=25)
         
         self.parse_uni(self.all_uni,self.all_rank,'RANK')
         self.df.set_index('UNIVERSITY',inplace=True)
@@ -28,7 +30,7 @@ class QS_SCAPER():
         
         
         for branch in self.branch_list:
-            self.unilist_raw,self.rank_list = self.get_uni(URL_prefix(branch),pages=25)
+            self.unilist_raw,self.rank_list = self.get_uni(URL_prefix(branch),pages=15)
 
             self.parse_uni(self.unilist_raw,self.rank_list,branch)
 
